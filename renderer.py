@@ -92,7 +92,15 @@ def _line_markup(
         escaped = _xml_escape(value.expandtabs(4))
         if not escaped:
             continue
-        info = pygments_style.style_for_token(ttype)
+        t = ttype
+        while t:
+            try:
+                info = pygments_style.style_for_token(t)
+                break
+            except KeyError:
+                t = t.parent
+        else:
+            info = {}
         color = _hex(info.get("color"))
         bold = info.get("bold", False)
         italic = info.get("italic", False)
