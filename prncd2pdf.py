@@ -60,6 +60,13 @@ def main() -> None:
         action="store_true",
         help="Disable line numbers in code blocks",
     )
+    parser.add_argument(
+        "--exclude",
+        metavar="PATTERN",
+        nargs="+",
+        default=None,
+        help="Extra glob patterns to exclude, e.g. 'Platforms/**' '.vs/**' (appended to config)",
+    )
 
     args = parser.parse_args()
 
@@ -95,6 +102,9 @@ def main() -> None:
 
     from config import load_config
     config = load_config(config_path, overrides if overrides else None)
+
+    if args.exclude:
+        config.files.exclude_patterns.extend(args.exclude)
 
     from builder import build
     build(config)

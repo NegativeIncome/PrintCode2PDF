@@ -213,8 +213,9 @@ def build_story(
     today = date.today().isoformat()
 
     # Cover page
-    story.append(Spacer(1, 60 * mm))
+    story.append(Spacer(1, 110 * mm))
     story.append(Paragraph(_xml_escape(root_name), title_style))
+    story.append(Spacer(1, 12 * mm))
     story.append(Paragraph("Source Code Report", subtitle_style))
     story.append(
         HRFlowable(

@@ -42,6 +42,9 @@ exclude_patterns = [
     ".env",
     "*.egg-info/**",
     "*.DS_Store",
+    "obj/**",
+    "bin/**",
+    "target/**",
 ]
 
 # Skip files larger than this (in KB). Set to 0 to disable the limit.

@@ -21,6 +21,9 @@ class FileRecord:
 def _is_likely_binary(path: Path, sample: int = 8192) -> bool:
     try:
         chunk = path.read_bytes()[:sample]
+        # UTF-16 files (common from Visual Studio) have a BOM and null bytes — text, not binary
+        if chunk[:2] in (b"\xff\xfe", b"\xfe\xff"):
+            return False
         if b"\x00" in chunk:
             return True
         chunk.decode("utf-8")
@@ -33,9 +36,15 @@ def _matches_any_pattern(posix_rel: str, patterns: list[str]) -> bool:
     for pattern in patterns:
         if fnmatch.fnmatch(posix_rel, pattern):
             return True
-        # Also match against just the filename for patterns without slashes
+        # Patterns without slashes match against just the filename
         if "/" not in pattern and fnmatch.fnmatch(Path(posix_rel).name, pattern):
             return True
+        # Patterns like "obj/**" should match at any depth ("src/obj/file")
+        if "/" in pattern:
+            parts = posix_rel.split("/")
+            for i in range(1, len(parts)):
+                if fnmatch.fnmatch("/".join(parts[i:]), pattern):
+                    return True
     return False
 
 
