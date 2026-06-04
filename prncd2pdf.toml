@@ -1,0 +1,76 @@
+# prncd2pdf.toml - Configuration for Source Code to PDF Printer
+# Edit this file before running: python prncd2pdf.py
+
+[project]
+# Directory to scan for source files (relative to this config file, or absolute)
+root = "."
+
+# Output PDF path. Tokens: {root_name} = basename of root dir, {date} = YYYY-MM-DD
+output = "./output_{root_name}_{date}.pdf"
+
+[files]
+# File extensions to include (leading dot required, case-insensitive)
+include_extensions = [
+    ".py", ".js", ".ts", ".jsx", ".tsx",
+    ".cs", ".go", ".java", ".rs",
+    ".cpp", ".c", ".h", ".hpp",
+    ".rb", ".php", ".swift", ".kt",
+    ".toml", ".yaml", ".yml", ".json",
+    ".md", ".sql", ".sh", ".ps1", ".bat",
+    ".html", ".css", ".scss",
+]
+
+# Glob patterns for files/directories to exclude (relative to root)
+# Supports * (any chars in segment), ** (any path segments), ? (single char)
+exclude_patterns = [
+    ".git/**",
+    ".svn/**",
+    "node_modules/**",
+    "__pycache__/**",
+    "*.pyc",
+    "*.min.js",
+    "*.min.css",
+    "*.lock",
+    "package-lock.json",
+    "yarn.lock",
+    "dist/**",
+    "build/**",
+    "out/**",
+    ".venv/**",
+    "venv/**",
+    "env/**",
+    ".env",
+    "*.egg-info/**",
+    "*.DS_Store",
+]
+
+# Skip files larger than this (in KB). Set to 0 to disable the limit.
+max_file_size_kb = 500
+
+# Skip files that appear to be binary (null-byte detection)
+skip_binary_files = true
+
+[pdf]
+# Page size: "A4" or "Letter"
+page_size = "A4"
+
+# Monospace font for code (system font stack)
+code_font = "Courier New, Courier, monospace"
+
+# Code font size in points
+code_font_size_pt = 9
+
+# Pygments syntax highlighting theme.
+# Run: pygmentize -L styles   to see all available themes.
+# Popular options: friendly, monokai, vs, github-dark, solarized-light, tango
+syntax_theme = "friendly"
+
+# Show line numbers in code blocks
+line_numbers = true
+
+# Print page numbers at the bottom of each page
+page_numbers = true
+
+[toc]
+# Heading for the Table of Contents page
+title = "Table of Contents"
