@@ -48,7 +48,7 @@ exclude_patterns = [
 ]
 
 # Skip files larger than this (in KB). Set to 0 to disable the limit.
-max_file_size_kb = 500
+max_file_size_kb = 1024
 
 # Skip files that appear to be binary (null-byte detection)
 skip_binary_files = true

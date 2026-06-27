@@ -82,7 +82,7 @@ _DEFAULTS: dict = {
             "dist/**", "build/**", ".venv/**", "venv/**",
             "obj/**", "bin/**", "target/**", "out/**",
         ],
-        "max_file_size_kb": 500,
+        "max_file_size_kb": 1024,
         "skip_binary_files": True,
     },
     "pdf": {
