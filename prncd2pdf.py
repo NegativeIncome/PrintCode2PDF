@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Source Code to PDF Printer.
+"""Source Code to PDF/EPUB Printer.
 
 Usage:
     python prncd2pdf.py                          # uses ./prncd2pdf.toml
     python prncd2pdf.py --config other.toml
     python prncd2pdf.py --root C:\\myproject
     python prncd2pdf.py --root . --theme monokai --output report.pdf
+    python prncd2pdf.py --root . --epub
 """
 from __future__ import annotations
 
@@ -16,7 +17,7 @@ from pathlib import Path
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Print project source code to a PDF with a clickable table of contents.",
+        description="Print project source code to a PDF or EPUB with a table of contents.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument(
@@ -67,6 +68,11 @@ def main() -> None:
         default=None,
         help="Extra glob patterns to exclude, e.g. 'Platforms/**' '.vs/**' (appended to config)",
     )
+    parser.add_argument(
+        "--epub",
+        action="store_true",
+        help="Generate an EPUB instead of a PDF (reflowable, navigable on e-readers)",
+    )
 
     args = parser.parse_args()
 
@@ -106,8 +112,12 @@ def main() -> None:
     if args.exclude:
         config.files.exclude_patterns.extend(args.exclude)
 
-    from builder import build
-    build(config)
+    if args.epub:
+        from builder import build_epub
+        build_epub(config)
+    else:
+        from builder import build
+        build(config)
 
 
 if __name__ == "__main__":
