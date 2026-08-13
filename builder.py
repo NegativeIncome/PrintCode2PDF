@@ -9,7 +9,7 @@ from reportlab.platypus import SimpleDocTemplate
 
 from config import Config
 from renderer import build_story
-from scanner import scan
+from scanner import scan, scan_git_ref
 
 _PAGE_SIZES = {
     "a4": A4,
@@ -30,8 +30,12 @@ def build(config: Config) -> Path:
     if not config.project.root.exists():
         sys.exit(f"Error: root directory does not exist: {config.project.root}")
 
-    print(f"Scanning: {config.project.root}")
-    records, skipped = scan(config)
+    if config.project.ref:
+        print(f"Scanning ref '{config.project.ref}' in: {config.project.root}")
+        records, skipped = scan_git_ref(config)
+    else:
+        print(f"Scanning: {config.project.root}")
+        records, skipped = scan(config)
 
     if not records:
         sys.exit(
@@ -83,8 +87,12 @@ def build_epub(config: Config) -> Path:
     if not config.project.root.exists():
         sys.exit(f"Error: root directory does not exist: {config.project.root}")
 
-    print(f"Scanning: {config.project.root}")
-    records, skipped = scan(config)
+    if config.project.ref:
+        print(f"Scanning ref '{config.project.ref}' in: {config.project.root}")
+        records, skipped = scan_git_ref(config)
+    else:
+        print(f"Scanning: {config.project.root}")
+        records, skipped = scan(config)
 
     if not records:
         sys.exit(

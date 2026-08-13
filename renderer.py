@@ -255,10 +255,7 @@ def build_story(
         story.append(AnchorFlowable(f"file-{i}"))
         story.append(Paragraph(_xml_escape(display), file_header_style))
 
-        try:
-            code_text = record.abs_path.read_text(encoding="utf-8", errors="replace")
-        except OSError:
-            code_text = "[Could not read file]"
+        code_text = record.read_text()
 
         line_count = code_text.count("\n")
         story.append(

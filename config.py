@@ -17,6 +17,7 @@ else:
 class ProjectConfig:
     root: Path
     output: str
+    ref: str | None = None
 
 
 @dataclass
@@ -129,7 +130,7 @@ def load_config(config_path: Path, overrides: dict | None = None) -> Config:
             for e in merged["files"]["include_extensions"]]
 
     return Config(
-        project=ProjectConfig(root=root, output=p["output"]),
+        project=ProjectConfig(root=root, output=p["output"], ref=p.get("ref")),
         files=FilesConfig(
             include_extensions=exts,
             exclude_patterns=merged["files"]["exclude_patterns"],

@@ -9,6 +9,7 @@ CLI tool that scans a project directory and renders its source code to a PDF wit
 - Clickable table of contents with PDF GoTo links (works in Edge, Acrobat, etc.)
 - Cover page and skipped-files appendix
 - Configurable via `printcode2pdf.toml` (page size, fonts, margins, TOC depth, page numbers)
+- Will print code from an NON checked out branch with a command line switch
 
 ## Requirements
 
