@@ -1,6 +1,6 @@
 # PrintCode2PDF
 
-CLI tool that scans a project directory and renders its source code to a PDF or EPUB with a clickable table of contents.
+CLI tool that scans a project directory and renders its source code to a PDF or EPUB with a clickable table of contents.  I wrote this so that I could read code on my Boox device and make notes.  But it should work for other environments.
 
 ## Features
 
