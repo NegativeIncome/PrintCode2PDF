@@ -1,4 +1,4 @@
-# PrnCd2PDF
+# PrintCode2PDF
 
 CLI tool that scans a project directory and renders its source code to a PDF with a clickable table of contents.
 
@@ -8,7 +8,7 @@ CLI tool that scans a project directory and renders its source code to a PDF wit
 - Syntax-highlighted code sections (via Pygments)
 - Clickable table of contents with PDF GoTo links (works in Edge, Acrobat, etc.)
 - Cover page and skipped-files appendix
-- Configurable via `prncd2pdf.toml` (page size, fonts, margins, TOC depth, page numbers)
+- Configurable via `printcode2pdf.toml` (page size, fonts, margins, TOC depth, page numbers)
 
 ## Requirements
 
@@ -20,18 +20,18 @@ Dependencies: `pygments>=2.17`, `reportlab>=4.0`, `tomli` (Python < 3.11)
 ## Usage
 
 ```
-python prncd2pdf.py [OPTIONS] [DIRECTORY]
+python printcode2pdf.py [OPTIONS] [DIRECTORY]
 ```
 
 | Option | Description |
 |--------|-------------|
 | `DIRECTORY` | Root directory to scan (default: current directory) |
 | `--output FILE` | Output PDF path (default: `output_<dir>_<date>.pdf`) |
-| `--config FILE` | Path to TOML config (default: `prncd2pdf.toml` in target dir) |
+| `--config FILE` | Path to TOML config (default: `printcode2pdf.toml` in target dir) |
 
 ## Configuration
 
-Copy or edit `prncd2pdf.toml` in your project root:
+Copy or edit `printcode2pdf.toml` in your project root:
 
 ```toml
 [pdf]
@@ -48,7 +48,7 @@ max_file_size_kb = 500
 
 | File | Role |
 |------|------|
-| `prncd2pdf.py` | CLI entry point, arg parsing |
+| `printcode2pdf.py` | CLI entry point, arg parsing |
 | `config.py` | TOML config loading with CLI override merging |
 | `scanner.py` | Directory walker with filtering |
 | `renderer.py` | ReportLab story builder (cover, TOC, code, appendix) |

@@ -2,11 +2,12 @@
 """Source Code to PDF/EPUB Printer.
 
 Usage:
-    python prncd2pdf.py                          # uses ./prncd2pdf.toml
-    python prncd2pdf.py --config other.toml
-    python prncd2pdf.py --root C:\\myproject
-    python prncd2pdf.py --root . --theme monokai --output report.pdf
-    python prncd2pdf.py --root . --epub
+    python printcode2pdf.py                          # uses ./printcode2pdf.toml
+    python printcode2pdf.py --config other.toml
+    python printcode2pdf.py --root C:\\myproject
+    python printcode2pdf.py --root . --theme monokai --output report.pdf
+    python printcode2pdf.py --root . --epub
+    python printcode2pdf.py --root C:\\myproject --ref windows-passkey-provider
 """
 from __future__ import annotations
 
@@ -24,13 +25,20 @@ def main() -> None:
         "--config",
         metavar="PATH",
         default=None,
-        help="Path to TOML config file (default: prncd2pdf.toml in current directory)",
+        help="Path to TOML config file (default: printcode2pdf.toml in current directory)",
     )
     parser.add_argument(
         "--root",
         metavar="DIR",
         default=None,
         help="Project root directory to scan (overrides config)",
+    )
+    parser.add_argument(
+        "--ref",
+        metavar="REF",
+        default=None,
+        help="Git branch, tag, or commit to scan instead of the working tree "
+             "(reads file contents via git plumbing; root must be inside a git repo)",
     )
     parser.add_argument(
         "--output",
@@ -88,15 +96,17 @@ def main() -> None:
         if not config_path.exists():
             sys.exit(f"Config file not found: {config_path}")
     else:
-        config_path = Path.cwd() / "prncd2pdf.toml"
+        config_path = Path.cwd() / "printcode2pdf.toml"
         if not config_path.exists():
             # Fall back to the directory of this script
-            config_path = Path(__file__).parent / "prncd2pdf.toml"
+            config_path = Path(__file__).parent / "printcode2pdf.toml"
 
     # Build CLI overrides dict (only set keys that were explicitly passed)
     overrides: dict = {}
     if args.root:
         overrides.setdefault("project", {})["root"] = str(Path(args.root).resolve())
+    if args.ref:
+        overrides.setdefault("project", {})["ref"] = args.ref
     if args.output:
         overrides.setdefault("project", {})["output"] = args.output
     if args.theme:

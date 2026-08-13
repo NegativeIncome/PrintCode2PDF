@@ -1,5 +1,5 @@
-# prncd2pdf.toml - Configuration for Source Code to PDF Printer
-# Edit this file before running: python prncd2pdf.py
+# printcode2pdf.toml - Configuration for Source Code to PDF Printer
+# Edit this file before running: python printcode2pdf.py
 
 [project]
 # Directory to scan for source files (relative to this config file, or absolute)

@@ -151,7 +151,7 @@ def build_epub_book(
     today = date.today().isoformat()
 
     book = epub.EpubBook()
-    book.set_identifier(f"prncd2pdf-{root_name}-{today}")
+    book.set_identifier(f"printcode2pdf-{root_name}-{today}")
     book.set_title(root_name)
     book.set_language("en")
 
@@ -200,10 +200,7 @@ def build_epub_book(
     for i, record in enumerate(records):
         display = PurePosixPath(record.rel_path).as_posix()
 
-        try:
-            code_text = record.abs_path.read_text(encoding="utf-8", errors="replace")
-        except OSError:
-            code_text = "[Could not read file]"
+        code_text = record.read_text()
 
         line_count = code_text.count("\n")
         lexer = _get_lexer(record)
